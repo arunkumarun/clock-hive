@@ -1,8 +1,8 @@
 <template>
   <div class="clock">
-    <div class="clock-face">
-      <span class="arm hours" :style="{transform: `rotate(${hourAngle}deg)`}"></span>
-      <span class="arm minutes" :style="{transform: `rotate(${minuteAngle}deg)`}"></span>
+    <div class="clock-face" style="">
+      <span class="arm hours"></span>
+      <span class="arm minutes"></span>
       <span class="circle"></span>
     </div>
   </div>
@@ -14,17 +14,25 @@ import {computed} from "vue";
 const props = withDefaults(defineProps<{
   hour?: number;
   minute?: number;
+  duration?: number;
 }>(), {
   hour: 0,
   minute: 0,
+  duration: 2,
 });
 
 const hourAngle = computed(() => {
-  return (props.hour % 12) * (360 / 12);
+  const angle = (props.hour % 12) * (360 / 12);
+  return `${angle}deg`;
 });
 
 const minuteAngle = computed(() => {
-  return (props.minute % 60) * (360 / 60);
+  const angle = (props.minute % 60) * (360 / 60);
+  return `${angle}deg`;
+});
+
+const durationInSeconds = computed(() => {
+  return `${props.duration}s`;
 });
 </script>
 
@@ -59,6 +67,7 @@ const minuteAngle = computed(() => {
 }
 
 .arm {
+  --_tdur: v-bind(durationInSeconds);
   background-color: var(--_abg);
   border-radius: calc(var(--_aw) * 2);
   display: block;
@@ -69,23 +78,23 @@ const minuteAngle = computed(() => {
   transform: rotate(0deg);
   transform-origin: bottom;
   width: var(--_aw);
-  transition: transform 2s ease-in-out;
+  transition: transform var(--_tdur) ease-in-out;
 }
 
 .minutes {
   --_abg: #eeeeee;
   --_ah: 45cqi;
   --_aw: 6cqi;
-  /*animation: turn 60s steps(60, end) infinite;
-  animation-delay: 0ms;*/
+  --minute-angle: v-bind(minuteAngle);
+  transform: rotate(var(--minute-angle));
 }
 
 .hours {
   --_abg: #eeeeee;
   --_ah: 45cqi;
   --_aw: 6cqi;
-  /*animation: turn 10s linear infinite;
-  animation-delay: 0ms;*/
+  --hour-angle: v-bind(hourAngle);
+  transform: rotate(var(--hour-angle));
   position: relative;
 }
 
@@ -99,11 +108,5 @@ const minuteAngle = computed(() => {
   width: var(--_csize);
   border-radius: 50%;
   background-color: #eeeeee;
-}
-
-@keyframes turn {
-  to {
-    transform: rotate(1turn);
-  }
 }
 </style>

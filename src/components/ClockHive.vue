@@ -2,7 +2,7 @@
   {{currentDate.toTimeString().slice(0, 8)}}
   <div class="clock-hive">
     <div v-for="digit in digits">
-      <Digit :digit-matrix="digitMatrix" :digit="digit"/>
+      <Digit :digit-matrix="digitMatrix" :digit="digit.digit" :duration="digit.duration"/>
     </div>
   </div>
 </template>
@@ -12,20 +12,6 @@ import {computed, onMounted, onUnmounted, ref} from "vue";
 import type {DigitKey} from "../util/digits/DigitUtil.ts";
 
 const currentDate = ref(new Date());
-
-const digitMatrix = ref<[number, number]>([3, 2]);
-
-const digits = computed<DigitKey[]>(() => {
-  const date = currentDate.value.toTimeString().slice(0, 8);
-  return [
-    Number(date.charAt(0)),
-    Number(date.charAt(1)),
-    Number(date.charAt(3)),
-    Number(date.charAt(4)),
-    /*Number(date.charAt(6)),
-    Number(date.charAt(7)),*/
-  ] as DigitKey[];
-});
 
 // Update the date every second
 let intervalId: number;
@@ -39,6 +25,21 @@ onMounted(() => {
 onUnmounted(() => {
   clearInterval(intervalId);
 });
+
+const digitMatrix = ref<[number, number]>([3, 2]);
+
+const digits = computed<Array<{digit: DigitKey, duration: number}>>(() => {
+  const date = currentDate.value.toTimeString().slice(0, 8);
+  return [
+    {digit: Number(date.charAt(0)) as DigitKey, duration: 2},
+    {digit: Number(date.charAt(1)) as DigitKey, duration: 2},
+    {digit: Number(date.charAt(3)) as DigitKey, duration: 2},
+    {digit: Number(date.charAt(4)) as DigitKey, duration: 2},
+    {digit: Number(date.charAt(6)) as DigitKey, duration: 2},
+    {digit: Number(date.charAt(7)) as DigitKey, duration: 0.5},
+  ];
+});
+
 </script>
 
 <style scoped>

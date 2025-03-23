@@ -2,7 +2,7 @@
   <div class="digit">
     <template v-for="(row, rowIndex) in digitClockHandMatrix">
       <div v-for="(clockHand, index) in row" :key="`${rowIndex}-${index}`">
-        <Clock :hour="clockHand.hour" :minute="clockHand.minute"/>
+        <Clock :hour="clockHand.hour" :minute="clockHand.minute" :duration="duration"/>
       </div>
     </template>
   </div>
@@ -15,7 +15,8 @@ import {computed} from "vue";
 
 const props = defineProps<{
   digitMatrix: [number, number];
-  digit: DigitKey
+  digit: DigitKey;
+  duration: number;
 }>();
 
 const digitClockHandMatrix = computed(() => {
