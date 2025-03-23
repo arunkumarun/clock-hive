@@ -22,9 +22,8 @@ import ClockHive from "./components/ClockHive.vue";
 .wrapper {
   display: grid;
   height: 100vh;
-  width: 100%;
+  width: 100vw;
   place-items: center;
-  place-content: center;
   grid-template-rows: minmax(0, min-content) minmax(0, 1fr) minmax(0, min-content);
 }
 
