@@ -20,11 +20,11 @@ const props = withDefaults(defineProps<{
 });
 
 const hourAngle = computed(() => {
-  return props.hour * (360 / 12);
+  return (props.hour % 12) * (360 / 12);
 });
 
 const minuteAngle = computed(() => {
-  return props.minute * (360 / 60);
+  return (props.minute % 60) * (360 / 60);
 });
 </script>
 
@@ -69,7 +69,7 @@ const minuteAngle = computed(() => {
   transform: rotate(0deg);
   transform-origin: bottom;
   width: var(--_aw);
-  transition: transform 0.5s ease-in-out;
+  transition: transform 2s ease-in-out;
 }
 
 .minutes {
