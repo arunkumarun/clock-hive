@@ -42,7 +42,7 @@ const durationInSeconds = computed(() => {
 
 <style scoped>
 .clock {
-  --_ow: clamp(5rem, 50px, 50px);
+  --_ow: clamp(1cqi, 12cqi, 12cqi);
   --_w: 95cqi;
   --_sz: 12cqi;
   --_r: calc((var(--_w) - var(--_sz)) / 2);

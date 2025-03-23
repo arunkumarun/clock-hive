@@ -31,7 +31,8 @@ import ClockHive from "./components/ClockHive.vue";
   width: 100%;
   display: grid;
   grid-auto-flow: column;
-  place-content: space-between;
+  place-items: center;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .title {
