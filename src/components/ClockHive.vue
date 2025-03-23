@@ -94,5 +94,6 @@ const digits = computed<Array<{digit: DigitKey, duration: number}>>(() => {
   overflow: hidden;
   padding: 40px;
   background-color: var(--clock-color);
+  box-shadow: 10px 10px 20px 0px rgba(35,35,35,1);
 }
 </style>
