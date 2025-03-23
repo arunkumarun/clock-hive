@@ -1,4 +1,5 @@
 <template>
+  {{currentDate.toTimeString().slice(0, 8)}}
   <div class="clock-hive">
     <div v-for="digit in digits">
       <Digit :digit-matrix="digitMatrix" :digit="digit"/>

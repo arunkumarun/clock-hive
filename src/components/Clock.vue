@@ -90,7 +90,7 @@ const minuteAngle = computed(() => {
 }
 
 .circle {
-  --_csize: 5cqi;
+  --_csize: 6cqi;
   position: absolute;
   top: calc(50%);
   left: calc(50%);
@@ -98,7 +98,6 @@ const minuteAngle = computed(() => {
   height: var(--_csize);
   width: var(--_csize);
   border-radius: 50%;
-  border: 1cqi solid #eeeeee;
   background-color: #eeeeee;
 }
 
