@@ -15,19 +15,23 @@ const props = withDefaults(defineProps<{
   hour?: number;
   minute?: number;
   duration?: number;
+  shouldMod?: boolean;
 }>(), {
   hour: 0,
   minute: 0,
   duration: 2,
+  shouldMod: true,
 });
 
 const hourAngle = computed(() => {
-  const angle = (props.hour % 12) * (360 / 12);
+  const h = props.shouldMod ? (props.hour % 12) : props.hour;
+  const angle = h * (360 / 12);
   return `${angle}deg`;
 });
 
 const minuteAngle = computed(() => {
-  const angle = (props.minute % 60) * (360 / 60);
+  const m = props.shouldMod ? (props.minute % 60) : props.minute;
+  const angle = m * (360 / 60);
   return `${angle}deg`;
 });
 
@@ -78,7 +82,7 @@ const durationInSeconds = computed(() => {
   transform: rotate(0deg);
   transform-origin: bottom;
   width: var(--_aw);
-  transition: transform var(--_tdur) ease-in-out;
+  transition: transform var(--_tdur) linear;
 }
 
 .minutes {

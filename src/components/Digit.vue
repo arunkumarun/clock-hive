@@ -2,7 +2,7 @@
   <div class="digit">
     <template v-for="(row, rowIndex) in digitClockHandMatrix">
       <div v-for="(clockHand, index) in row" :key="`${rowIndex}-${index}`">
-        <Clock :hour="clockHand.hour" :minute="clockHand.minute" :duration="duration"/>
+        <Clock :hour="clockHand.hour" :minute="clockHand.minute" :should-mod="clockHand.shouldMod" :duration="duration"/>
       </div>
     </template>
   </div>
@@ -27,8 +27,8 @@ const digitClockHandMatrix = computed(() => {
 <style scoped>
 
 .digit {
-  --_digit-row: 3;
-  --_digit-col: 2;
+  --_digit-row: v-bind(digitMatrix[0], 3);
+  --_digit-col: v-bind(digitMatrix[1], 2);
   display: grid;
   grid-template-columns: repeat(var(--_digit-col), minmax(0, 1fr));
   grid-template-rows: repeat(var(--_digit-row), minmax(0, 1fr));
