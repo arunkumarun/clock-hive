@@ -1,6 +1,6 @@
 <template>
   <div class="clock">
-    <div class="clock-face" style="">
+    <div class="clock-face">
       <span class="arm hours"></span>
       <span class="arm minutes"></span>
       <span class="circle"></span>
@@ -80,13 +80,15 @@ const durationInSeconds = computed(() => {
   position: absolute;
   top: calc((var(--_w) / 2) - var(--_ah));
   transform: rotate(0deg);
-  transform-origin: bottom;
+  transform-origin: 50% calc((var(--_ah)) - (var(--_aw) / 2));
   width: var(--_aw);
   transition: transform var(--_tdur) linear;
+  border: 1px solid #2F2F2F;
+  margin-top: calc(var(--_aw) / 2);
 }
 
 .minutes {
-  --_abg: #eeeeee;
+  --_abg: #EEE;
   --_ah: 45cqi;
   --_aw: 6cqi;
   --minute-angle: v-bind(minuteAngle);
@@ -94,23 +96,12 @@ const durationInSeconds = computed(() => {
 }
 
 .hours {
-  --_abg: #eeeeee;
-  --_ah: 45cqi;
+  --_abg: #EEE;
+  --_ah: 40cqi;
   --_aw: 6cqi;
   --hour-angle: v-bind(hourAngle);
   transform: rotate(var(--hour-angle));
   position: relative;
 }
 
-.circle {
-  --_csize: 6cqi;
-  position: absolute;
-  top: calc(50%);
-  left: calc(50%);
-  transform: translate(-50%, -50%);
-  height: var(--_csize);
-  width: var(--_csize);
-  border-radius: 50%;
-  background-color: #eeeeee;
-}
 </style>
