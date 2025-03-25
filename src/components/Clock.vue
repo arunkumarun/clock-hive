@@ -10,15 +10,12 @@
 
 <script setup lang="ts">
 import {computed} from "vue";
+import type {ClockProp} from "../util/digits/DigitUtil.ts";
 
-const props = withDefaults(defineProps<{
-  hour?: number;
-  minute?: number;
-  duration?: number;
-  shouldMod?: boolean;
-}>(), {
+const props = withDefaults(defineProps<ClockProp>(), {
   hour: 0,
   minute: 0,
+  delay: 0,
   duration: 2,
   shouldMod: true,
 });
@@ -37,6 +34,10 @@ const minuteAngle = computed(() => {
 
 const durationInSeconds = computed(() => {
   return `${props.duration}s`;
+});
+
+const delayInSeconds = computed(() => {
+  return `${props.delay}s`;
 });
 </script>
 
@@ -72,6 +73,7 @@ const durationInSeconds = computed(() => {
 
 .arm {
   --_tdur: v-bind(durationInSeconds);
+  --_tdel: v-bind(delayInSeconds);
   background-color: var(--_abg);
   border-radius: calc(var(--_aw) * 2);
   display: block;
@@ -82,7 +84,8 @@ const durationInSeconds = computed(() => {
   transform: rotate(0deg);
   transform-origin: 50% calc((var(--_ah)) - (var(--_aw) / 2));
   width: var(--_aw);
-  transition: transform var(--_tdur) linear;
+  transition: transform var(--_tdur) cubic-bezier(.09,-0.01,.61,.99);
+  transition-delay: var(--_tdel);
   border: 1px solid #2F2F2F;
   margin-top: calc(var(--_aw) / 2);
 }

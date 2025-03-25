@@ -1,26 +1,28 @@
 import {digit3x2} from "./Digit3x2.ts";
 
-export interface ClockHand {
+export interface ClockProp {
   hour: number;
   minute: number;
+  duration?: number;
+  delay?: number;
   shouldMod?: boolean;
 }
 
 export interface DigitClockHand {
-  0: ClockHand[][];
-  1: ClockHand[][];
-  2: ClockHand[][];
-  3: ClockHand[][];
-  4: ClockHand[][];
-  5: ClockHand[][];
-  6: ClockHand[][];
-  7: ClockHand[][];
-  8: ClockHand[][];
-  9: ClockHand[][];
-  "neutral1": ClockHand[][];
-  "neutral2": ClockHand[][];
-  "neutral3": ClockHand[][];
-  "neutral4": ClockHand[][];
+  0: ClockProp[][];
+  1: ClockProp[][];
+  2: ClockProp[][];
+  3: ClockProp[][];
+  4: ClockProp[][];
+  5: ClockProp[][];
+  6: ClockProp[][];
+  7: ClockProp[][];
+  8: ClockProp[][];
+  9: ClockProp[][];
+  "neutral1": ClockProp[][];
+  "neutral2": ClockProp[][];
+  "neutral3": ClockProp[][];
+  "neutral4": ClockProp[][];
 }
 
 export type DigitKey = keyof DigitClockHand;

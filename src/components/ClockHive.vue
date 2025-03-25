@@ -1,23 +1,70 @@
 <template>
-<!--  {{currentDate.toTimeString().slice(0, 8)}}-->
+  {{currentDate.toTimeString().slice(0, 8)}}
   <div class="clock-hive">
-    <div v-for="digit in digits">
-      <Digit :digit-matrix="digitMatrix" :digit="digit.digit" :duration="digit.duration"/>
+    <div class="grid-digits">
+      <div class="grid-clock" v-for="(digits) in clockDigitMatrix">
+        <template v-for="digit in digits">
+          <template v-for="clock in digit">
+            <Clock v-bind="clock"/>
+          </template>
+        </template>
+      </div>
     </div>
   </div>
 </template>
 <script setup lang="ts">
-import Digit from "./Digit.vue";
 import {computed, onMounted, onUnmounted, ref} from "vue";
-import type {DigitKey} from "../util/digits/DigitUtil.ts";
+import {type ClockProp, digitClockHandMap, type DigitKey} from "../util/digits/DigitUtil.ts";
+import Clock from "./Clock.vue";
 
 const currentDate = ref(new Date());
+
+const digitCount = ref<number>(4);
+const digitArray = ref<DigitKey[]>(Array(digitCount.value).fill(0));
+const digitMatrix = ref<[number, number]>([3, 2]);
+const clockDigitMatrix = computed<ClockProp[][][]>(() => {
+  return digitArray.value.map((dk) => {
+    return digitClockHandMap[digitMatrix.value[0]][digitMatrix.value[1]][dk];
+  });
+});
 
 // Update the date every second
 let intervalId: number;
 onMounted(() => {
   intervalId = setInterval(() => {
     currentDate.value = new Date(); // Update the current date
+
+    const seconds = currentDate.value.getSeconds();
+
+    if (seconds > 10 && seconds <= 20) {
+      setDigits(Array(digitCount.value).fill("neutral1"))
+      return;
+    }
+    if (seconds > 20 && seconds <= 30) {
+      setDigits(Array(digitCount.value).fill("neutral2"))
+      return;
+    }
+    if (seconds > 30 && seconds <= 40) {
+      setDigits(Array(digitCount.value).fill("neutral3"))
+      return;
+    }
+    if (seconds > 40 && seconds <= 50) {
+      setDigits(Array(digitCount.value).fill("neutral4"))
+      return;
+    }
+    if (seconds > 50 && seconds <= 60) {
+      setDigits(Array(digitCount.value).fill("neutral1"))
+      return;
+    }
+
+    const time = currentDate.value.toTimeString().slice(0, 8);
+    setDigits([
+      Number(time.charAt(0)) as DigitKey,
+      Number(time.charAt(1)) as DigitKey,
+      Number(time.charAt(3)) as DigitKey,
+      Number(time.charAt(4)) as DigitKey,
+    ]);
+    return;
   }, 1000); // Check every second
 });
 
@@ -26,61 +73,9 @@ onUnmounted(() => {
   clearInterval(intervalId);
 });
 
-const digitMatrix = ref<[number, number]>([3, 2]);
-
-const digits = computed<Array<{digit: DigitKey, duration: number}>>(() => {
-  const date = currentDate.value.toTimeString().slice(0, 8);
-  const seconds = currentDate.value.getSeconds();
-  if (seconds > 5 && seconds <= 20) {
-    return [
-      {digit: "neutral1", duration: 15},
-      {digit: "neutral1", duration: 15},
-      {digit: "neutral1", duration: 15},
-      {digit: "neutral1", duration: 15},
-    ];
-  }
-  if (seconds > 20 && seconds <= 30) {
-    return [
-      {digit: "neutral2", duration: 10},
-      {digit: "neutral2", duration: 10},
-      {digit: "neutral2", duration: 10},
-      {digit: "neutral2", duration: 10},
-    ];
-  }
-  if (seconds > 30 && seconds <= 40) {
-    return [
-      {digit: "neutral3", duration: 10},
-      {digit: "neutral3", duration: 10},
-      {digit: "neutral3", duration: 10},
-      {digit: "neutral3", duration: 10},
-    ];
-  }
-  if (seconds > 40 && seconds <= 50) {
-    return [
-      {digit: "neutral4", duration: 10},
-      {digit: "neutral4", duration: 10},
-      {digit: "neutral4", duration: 10},
-      {digit: "neutral4", duration: 10},
-    ];
-  }
-  if (seconds > 50 && seconds <= 60) {
-    return [
-      {digit: "neutral1", duration: 10},
-      {digit: "neutral1", duration: 10},
-      {digit: "neutral1", duration: 10},
-      {digit: "neutral1", duration: 10},
-    ];
-  }
-
-  return [
-    {digit: Number(date.charAt(0)) as DigitKey, duration: 2},
-    {digit: Number(date.charAt(1)) as DigitKey, duration: 2},
-    {digit: Number(date.charAt(3)) as DigitKey, duration: 2},
-    {digit: Number(date.charAt(4)) as DigitKey, duration: 2},
-    /*{digit: Number(date.charAt(6)) as DigitKey, duration: 2},
-    {digit: Number(date.charAt(7)) as DigitKey, duration: 0.5},*/
-  ];
-});
+function setDigits(digitKeys: DigitKey[]): void {
+  digitArray.value = digitKeys;
+}
 
 </script>
 
@@ -95,6 +90,19 @@ const digits = computed<Array<{digit: DigitKey, duration: number}>>(() => {
   padding: 1cqi;
   margin: 1cqi;
   background-color: var(--clock-color);
-  box-shadow: 10px 10px 20px 0px rgba(35,35,35,1);
+  box-shadow: 10px 10px 20px 0 rgba(35,35,35,1);
+}
+
+.grid-digits {
+  display: grid;
+  grid-auto-flow: column;
+}
+
+.grid-clock {
+  --_digit-r: v-bind(digitMatrix[0], 3);
+  --_digit-c: v-bind(digitMatrix[1], 2);
+  display: grid;
+  grid-template-columns: repeat(var(--_digit-c), minmax(0, 1fr));
+  grid-template-rows: repeat(var(--_digit-r), minmax(0, 1fr));
 }
 </style>

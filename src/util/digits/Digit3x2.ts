@@ -1,10 +1,10 @@
-import type {ClockHand, DigitClockHand} from "./DigitUtil.ts";
+import type {ClockProp, DigitClockHand} from "./DigitUtil.ts";
 
-export const noneHand: ClockHand = {hour: 7.5, minute: 37.5};
-export const neutralHand1: ClockHand = {hour: 7.5, minute: 7.5};
-export const neutralHand2: ClockHand = {hour: 10.5, minute: 22.5};
-export const neutralHand3: ClockHand = {hour: 13.5, minute: 37.5, shouldMod: false};
-export const neutralHand4: ClockHand = {hour: 16.5, minute: 52.5, shouldMod: false};
+export const noneHand: ClockProp = {hour: 7.5, minute: 37.5};
+export const neutralHand1: ClockProp = {hour: 7.5, minute: 7.5, duration: 10};
+export const neutralHand2: ClockProp = {hour: 13.5, minute: 37.5, duration: 10, shouldMod: false};
+export const neutralHand3: ClockProp = {hour: 19.5, minute: 67.5, duration: 10, shouldMod: false};
+export const neutralHand4: ClockProp = {hour: 25.5, minute: 97.5, duration: 10, shouldMod: false};
 
 export const digit3x2: DigitClockHand = {
   0: [
