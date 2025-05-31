@@ -1,4 +1,5 @@
 import {digit3x2} from "./Digit3x2.ts";
+import {digit6x3} from "./Digit6x3.ts";
 
 export interface ClockProp {
   hour: number;
@@ -34,6 +35,11 @@ export const digitClockHandMap: DigitClockHandMap = {
   3: {
     2: {
       ...digit3x2,
+    }
+  },
+  6: {
+    3: {
+      ...digit6x3,
     }
   }
 };
