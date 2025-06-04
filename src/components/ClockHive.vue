@@ -1,5 +1,5 @@
 <template>
-  {{currentDate.toTimeString().slice(0, 8)}}
+  <!--{{currentDate.toTimeString().slice(0, 8)}}-->
   <div class="clock-hive">
     <div class="grid-digits">
       <div class="grid-clock" v-for="(digits) in clockDigitMatrix">
@@ -17,11 +17,17 @@ import {computed, onMounted, onUnmounted, ref} from "vue";
 import {type ClockProp, digitClockHandMap, type DigitKey} from "../util/digits/DigitUtil.ts";
 import Clock from "./Clock.vue";
 
+const props = withDefaults(defineProps<{
+  matrixSize?: [number, number];
+}>(), {
+  matrixSize: () => [3, 2],
+});
+
 const currentDate = ref(new Date());
 
 const digitCount = ref<number>(4);
 const digitArray = ref<DigitKey[]>(Array(digitCount.value).fill(0));
-const digitMatrix = ref<[number, number]>([3, 2]);
+const digitMatrix = ref<[number, number]>(props.matrixSize);
 const clockDigitMatrix = computed<ClockProp[][][]>(() => {
   return digitArray.value.map((dk) => {
     return digitClockHandMap[digitMatrix.value[0]][digitMatrix.value[1]][dk];
@@ -99,8 +105,8 @@ function setDigits(digitKeys: DigitKey[]): void {
 }
 
 .grid-clock {
-  --_digit-r: v-bind(digitMatrix[0], 3);
-  --_digit-c: v-bind(digitMatrix[1], 2);
+  --_digit-r: v-bind(digitMatrix[0]);
+  --_digit-c: v-bind(digitMatrix[1]);
   display: grid;
   grid-template-columns: repeat(var(--_digit-c), minmax(0, 1fr));
   grid-template-rows: repeat(var(--_digit-r), minmax(0, 1fr));

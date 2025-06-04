@@ -7,7 +7,7 @@
         Source Code
       </a>
     </header>
-    <ClockHive/>
+    <ClockHiveSelector/>
     <footer class="footer">
       <p>Made by <a target="_blank" href="https://github.com/arunkumarun">Arun Kumar R</a></p>
     </footer>
@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import ClockHive from "./components/ClockHive.vue";
+import ClockHiveSelector from "./components/ClockHiveSelector.vue";
 </script>
 
 <style scoped>
