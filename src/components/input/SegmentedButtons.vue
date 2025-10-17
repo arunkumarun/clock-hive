@@ -45,6 +45,7 @@ function updateModel(val: T) {
   border: 0;
   height: 1.5rem;
   padding: 0 16px;
+  min-width: fit-content;
 }
 
 .btn__active {

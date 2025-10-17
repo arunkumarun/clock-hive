@@ -43,9 +43,9 @@ const delayInSeconds = computed(() => {
 
 <style scoped>
 .clock {
-  --_ow: clamp(1cqi, 6cqi, 6cqi);
+  --_ow: clamp(1cqi, 4cqi, 4cqi);
   --_w: 95cqi;
-  --_sz: 6cqi;
+  --_sz: 4cqi;
   --_r: calc((var(--_w) - var(--_sz)) / 2);
 
   background: transparent;

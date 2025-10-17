@@ -12,11 +12,12 @@ import {ref} from "vue";
 import ClockHive from "./ClockHive.vue";
 import SegmentedButtons from "./input/SegmentedButtons.vue";
 
-const matrixSize = ref<[number, number]>([6, 3]);
+const matrixSize = ref<[number, number]>([6, 5]);
 
 const items = [
   {name: `Hive ${3*2*4}`, value: [3, 2]},
   {name: `Hive ${6*3*4}`, value: [6, 3]},
+  {name: `Hive ${6*5*4}`, value: [6, 5]},
 ]
 </script>
 
