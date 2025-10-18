@@ -30,7 +30,7 @@ const digitArray = ref<DigitKey[]>(Array(digitCount.value).fill(0));
 const digitMatrix = ref<[number, number]>(matrixSize);
 const clockDigitMatrix = computed<ClockProp[][][]>(() => {
   return digitArray.value.map((dk) => {
-    return digitClockHandMap[digitMatrix.value[0]][digitMatrix.value[1]][dk];
+    return digitClockHandMap[digitMatrix.value[0]]?.[digitMatrix.value[1]]?.[dk] ?? [];
   });
 });
 
