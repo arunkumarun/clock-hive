@@ -87,6 +87,7 @@ const delayInSeconds = computed(() => {
   transform-origin: 50% calc((var(--_arm_height)) - (var(--_arm_width) / 2));
   border-radius: 10000px;
   background-color: var(--_arm_background);
+  border: 1px solid #2F2F2F;
   transition: transform var(--_transition_duration) cubic-bezier(.09,-0.01,.61,.99);
   transition-delay: var(--_transition_delay);
 }
