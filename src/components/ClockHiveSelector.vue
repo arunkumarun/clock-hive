@@ -31,11 +31,13 @@ const items = [
 }
 
 .clock-hive-container {
+  height: 100%;
+  width: 100%;
   display: grid;
-  place-self: center;
   grid-auto-flow: column;
-  grid-auto-rows: max-content;
-  grid-auto-columns: max-content;
+  grid-auto-rows: minmax(0, 1fr);
+  grid-auto-columns: minmax(0, 1fr);
+  align-items: center;
 }
 
 .clock-hive-segmented-btn {

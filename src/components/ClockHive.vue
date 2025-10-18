@@ -17,17 +17,17 @@ import {computed, onMounted, onUnmounted, ref} from "vue";
 import {type ClockProp, digitClockHandMap, type DigitKey} from "../util/digits/DigitUtil.ts";
 import Clock from "./Clock.vue";
 
-const props = withDefaults(defineProps<{
+const {
+  matrixSize = [3, 2],
+} = defineProps<{
   matrixSize?: [number, number];
-}>(), {
-  matrixSize: () => [3, 2],
-});
+}>();
 
 const currentDate = ref(new Date());
 
 const digitCount = ref<number>(4);
 const digitArray = ref<DigitKey[]>(Array(digitCount.value).fill(0));
-const digitMatrix = ref<[number, number]>(props.matrixSize);
+const digitMatrix = ref<[number, number]>(matrixSize);
 const clockDigitMatrix = computed<ClockProp[][][]>(() => {
   return digitArray.value.map((dk) => {
     return digitClockHandMap[digitMatrix.value[0]][digitMatrix.value[1]][dk];
@@ -105,10 +105,10 @@ function setDigits(digitKeys: DigitKey[]): void {
 }
 
 .grid-clock {
-  --_digit-r: v-bind(digitMatrix[0]);
-  --_digit-c: v-bind(digitMatrix[1]);
+  --_digit-row: v-bind(digitMatrix[0]);
+  --_digit-column: v-bind(digitMatrix[1]);
   display: grid;
-  grid-template-columns: repeat(var(--_digit-c), minmax(0, 1fr));
-  grid-template-rows: repeat(var(--_digit-r), minmax(0, 1fr));
+  grid-template-columns: repeat(var(--_digit-column), minmax(0, 1fr));
+  grid-template-rows: repeat(var(--_digit-row), minmax(0, max-content));
 }
 </style>

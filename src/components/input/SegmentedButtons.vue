@@ -34,6 +34,7 @@ function updateModel(val: T) {
   border: 1px solid black;
   border-radius: 8px;
   flex-grow: 1;
+  background: #F0F0F0;
 }
 
 .btn {
@@ -46,6 +47,7 @@ function updateModel(val: T) {
   height: 1.5rem;
   padding: 0 16px;
   min-width: fit-content;
+  cursor: pointer;
 }
 
 .btn__active {
