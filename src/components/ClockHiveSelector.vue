@@ -1,16 +1,23 @@
 <template>
   <div class="clock-hive-selector">
-    <SegmentedButtons class="clock-hive-segmented-btn" v-model="matrixSize" :items="items"/>
-    <div class="clock-hive-container">
+    <div class="clock-actions">
+      <SegmentedButtons v-model="matrixSize" :items="items"/>
+      <button @click="toggleFullScreen">{{ isFullscreen ? 'Exit Full Screen' : 'Enter Full Screen' }}</button>
+    </div>
+    <div ref="clockHiveContainer" class="clock-hive-container">
       <ClockHive :key="matrixSize.toString()" :matrix-size="matrixSize"/>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import {ref} from "vue";
+import {ref, useTemplateRef} from "vue";
 import ClockHive from "./ClockHive.vue";
 import SegmentedButtons from "./input/SegmentedButtons.vue";
+import {useFullscreen} from "@vueuse/core";
+
+const clockHiveContainer = useTemplateRef<HTMLDivElement>("clockHiveContainer");
+const { isFullscreen, toggle: toggleFullScreen } = useFullscreen(clockHiveContainer);
 
 const matrixSize = ref<[number, number]>([6, 5]);
 
@@ -38,9 +45,13 @@ const items = [
   grid-auto-rows: minmax(0, 1fr);
   grid-auto-columns: minmax(0, 1fr);
   align-items: center;
+  overflow: hidden;
+  margin: auto;
 }
 
-.clock-hive-segmented-btn {
+.clock-actions {
+  display: flex;
+  gap: 1rem;
   margin: auto;
 }
 </style>

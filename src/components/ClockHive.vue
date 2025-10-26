@@ -92,23 +92,28 @@ function setDigits(digitKeys: DigitKey[]): void {
   border-radius: 4px;
   display: grid;
   grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  grid-auto-rows: minmax(0, max-content);
   overflow: hidden;
   padding: 1cqi;
   margin: 1cqi;
   background-color: var(--clock-color);
-  box-shadow: 10px 10px 20px 0 rgba(35,35,35,1);
+  box-shadow: 1cqi 1cqi 1cqi 0 rgba(35, 35, 35, 0.5);
 }
 
 .grid-digits {
   display: grid;
   grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  grid-auto-rows: minmax(0, max-content);
 }
 
 .grid-clock {
   --_digit-row: v-bind(digitMatrix[0]);
   --_digit-column: v-bind(digitMatrix[1]);
   display: grid;
-  grid-template-columns: repeat(var(--_digit-column), minmax(0, 1fr));
+  grid-template-columns: repeat(var(--_digit-column), 1fr);
   grid-template-rows: repeat(var(--_digit-row), minmax(0, max-content));
+  justify-items: stretch;
 }
 </style>
